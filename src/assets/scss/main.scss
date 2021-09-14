@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family: "Fira Sans", sans-serif;
+}
+
+body {
+    background: rgb(19, 19, 19);
+    color: #fff;
+
+    a {
+        text-decoration: none;
+        color: #fff;
+    }
+}
+
+header {
+    padding-top: 30px;
+
+    h1 {
+        color: #aaa;
+        font-size: 28px;
+        text-align: center;
+
+        strong {
+            color: #fff;
+        }
+    }
+
+    hr {
+        width: 30%;
+        min-width: 260px;
+        margin: 1rem auto;
+    }
+}
+
+.anime-slider {
+    width: 90%;
+    max-width: 1250px;
+    margin: 0 auto;
+    text-align: center;
+
+    h1 {
+        font-size: 24px;
+        padding-bottom: 20px;
+    }
+
+    .swiper-slide {
+        width: auto;
+        max-width: 220px;
+    }
+    img {
+        width: 220px;
+        height: 320px;
+    }
+}
+
+.main-header {
+    text-align: center;
+    margin: 20px 0;
+    h2 {
+        margin: 10px 0;
+    }
+    input {
+        padding: 8px 15px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+}
+
+.anime-list {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+
+    .anime-card {
+        margin: 10px 25px;
+        img {
+            width: 220px;
+            height: 320px;
+        }
+
+        h3 {
+            max-width: 220px;
+        }
+    }
+}
+
+footer{
+    text-align: center;
+    margin-top: 20px;
+    padding-bottom: 10px;
+    hr{
+        width: 90%;
+        max-width: 1600px;
+        margin: 0 auto;
+    }
+    h2{
+        padding:8px 0;
+    }
+}
