@@ -8,6 +8,7 @@
 body {
   background: #131313;
   color: #fff;
+  text-align: center;
 }
 
 body a {
@@ -55,6 +56,36 @@ header hr {
 .anime-slider img {
   width: 220px;
   height: 320px;
+}
+
+.anime-quote {
+  width: 80%;
+  max-width: 700px;
+  font-size: 1.5rem;
+  margin: 70px auto 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background: #fff;
+  color: #131313;
+  border-radius: 5px;
+}
+
+.anime-quote h2 {
+  width: auto;
+  padding: 0.5rem;
+  background: #fff;
+  font-size: 2rem;
+  left: 0;
+  border-radius: 4px;
+  position: absolute;
+  top: -40px;
+}
+
+.anime-quote .quote {
+  padding: 2rem 1rem;
 }
 
 .main-header {
