@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import TopAnime from "./components/TopAnime";
+import AnimeQuote from "./components/AnimeQuote";
 import MainContent from "./components/MainContent";
-import Footer from './components/Footer'
-
+import Footer from "./components/Footer";
 
 function App() {
   const [animeList, setAnimeList] = useState([]);
   const [topAnime, setTopAnime] = useState([]);
   const [search, setSearch] = useState("");
+  const [quotes, setQuotes] = useState(null);
 
   const GetTopAnime = async () => {
     const temp = await fetch(
@@ -16,7 +17,7 @@ function App() {
     ).then((res) => res.json());
 
     setTopAnime(temp.top.slice(0, 10));
-    setAnimeList(temp.top.slice(12, 24))
+    setAnimeList(temp.top.slice(12, 24));
   };
 
   const HandleSearch = (e) => {
@@ -29,28 +30,33 @@ function App() {
       `https://api.jikan.moe/v3/search/anime?q=${query}&order_by=title&sort=asc&limit=12`
     ).then((res) => res.json());
 
-    console.log(temp.results);
-
     setAnimeList(temp.results);
   };
 
+  const GetQuotes = async () => {
+    const temp = await fetch("https://animechan.vercel.app/api/random").then(
+      (res) => res.json()
+    );
+    setQuotes(temp);
+  };
+
   useEffect(() => {
+    GetQuotes();
     GetTopAnime();
   }, []);
 
   return (
     <div className="App">
       <Header />
-      <div className="content-wrap">
-        <TopAnime topAnime={topAnime} />
-        <MainContent
-          HandleSearch={HandleSearch}
-          search={search}
-          setSearch={setSearch}
-          animeList={animeList}
-        />
-      </div>
-      <Footer/>
+      <TopAnime topAnime={topAnime} />
+      {quotes&&<AnimeQuote quotes={quotes}/>}
+      <MainContent
+        HandleSearch={HandleSearch}
+        search={search}
+        setSearch={setSearch}
+        animeList={animeList}
+      />
+      <Footer />
     </div>
   );
 }
