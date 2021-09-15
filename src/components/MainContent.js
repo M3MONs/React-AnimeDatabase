@@ -1,5 +1,5 @@
 import React from "react";
-import AnimeCard from './AnimeCard'
+import AnimeCard from "./AnimeCard";
 
 function MainContent(props) {
   return (
@@ -12,12 +12,14 @@ function MainContent(props) {
             placeholder="Search for an anime..."
             required
             value={props.search}
-            onChange={e=>props.setSearch(e.target.value)}
+            onChange={(e) => props.setSearch(e.target.value)}
           />
         </form>
       </div>
       <div className="anime-list">
-      {props.animeList.map(anime=>(<AnimeCard key={anime.mal_id} anime={anime}/>))}
+        {props.animeList.map((anime) => (
+          <AnimeCard key={anime.mal_id} anime={anime} />
+        ))}
       </div>
     </main>
   );
