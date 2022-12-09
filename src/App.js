@@ -4,61 +4,86 @@ import TopAnime from "./components/TopAnime";
 import AnimeQuote from "./components/AnimeQuote";
 import MainContent from "./components/MainContent";
 import Footer from "./components/Footer";
+import axios from "axios";
 
 function App() {
-  const [animeList, setAnimeList] = useState([]);
-  const [topAnime, setTopAnime] = useState([]);
-  const [search, setSearch] = useState("");
-  const [quotes, setQuotes] = useState(null);
+    const [animeList, setAnimeList] = useState([]);
+    const [topAnime, setTopAnime] = useState([]);
+    const [quotes, setQuotes] = useState(null);
 
-  const GetTopAnime = async () => {
-    const temp = await fetch(
-      "https://api.jikan.moe/v3/top/anime/1/bypopularity"
-    ).then((res) => res.json());
+    /**
+     * The function getTopAnime is an asynchronous function that uses the axios library to make a GET
+     * request to the Jikan API and returns the data from the response.
+     */
+    const getTopAnime = async () => {
+        const topAnimeLink = "https://api.jikan.moe/v4/top/anime?page=1&limit=10";
+        try {
+            const { data } = await axios.get(topAnimeLink);
+            setTopAnime(data.data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
-    setTopAnime(temp.top.slice(0, 10));
-    setAnimeList(temp.top.slice(12, 24));
-  };
+    /**
+     * The function gets the data from the API and sets the state of the animeList to the data from the
+     * API.
+     */
+    const getAnime = async () => {
+        const animeLink = "https://api.jikan.moe/v4/top/anime?page=2&limit=12";
+        try {
+            const { data } = await axios.get(animeLink);
+            setAnimeList(data.data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
-  const HandleSearch = (e) => {
-    e.preventDefault();
-    FetchAnime(search);
-  };
+    /**
+     * It gets a random quote from the API and sets it to the state.
+     */
+    const getQuotes = async () => {
+        const quotesLink = "https://animechan.vercel.app/api/random";
+        try {
+            const { data } = await axios.get(quotesLink);
+            setQuotes(data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
-  const FetchAnime = async (query) => {
-    const temp = await fetch(
-      `https://api.jikan.moe/v3/search/anime?q=${query}&order_by=title&sort=asc&limit=12`
-    ).then((res) => res.json());
+    const handleSearchAnime = async (e) => {
+        const name = e.target.value;
+        if (name === "") {
+            getAnime();
+            return;
+        }
+        if (name.length < 2) return;
 
-    setAnimeList(temp.results);
-  };
+        try {
+            const animeLink = `https://api.jikan.moe/v4/anime?q=${name}&order_by="title"`;
+            const { data } = await axios.get(animeLink);
+            setAnimeList(data.data.slice(0, 12));
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
-  const GetQuotes = async () => {
-    const temp = await fetch("https://animechan.vercel.app/api/random").then(
-      (res) => res.json()
+    useEffect(() => {
+        getTopAnime();
+        getQuotes();
+        getAnime();
+    }, []);
+
+    return (
+        <div className='App'>
+            <Header />
+            <TopAnime topAnime={topAnime} />
+            {quotes && <AnimeQuote quotes={quotes} />}
+            <MainContent search={handleSearchAnime} animeList={animeList} />
+            <Footer />
+        </div>
     );
-    setQuotes(temp);
-  };
-
-  useEffect(() => {
-    GetQuotes();
-    GetTopAnime();
-  }, []);
-
-  return (
-    <div className="App">
-      <Header />
-      <TopAnime topAnime={topAnime} />
-      {quotes&&<AnimeQuote quotes={quotes}/>}
-      <MainContent
-        HandleSearch={HandleSearch}
-        search={search}
-        setSearch={setSearch}
-        animeList={animeList}
-      />
-      <Footer />
-    </div>
-  );
 }
 
 export default App;

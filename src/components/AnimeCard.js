@@ -1,16 +1,17 @@
 import React from "react";
 
 function AnimeCard({ anime }) {
-  return (
-    <section className="anime-card">
-      <a href={anime.url} target="_blank" rel="noreferrer">
-        <figure>
-          <img src={anime.image_url} alt={anime.title} />
-        </figure>
-        <h3>{anime.title}</h3>
-      </a>
-    </section>
-  );
+    const { url, title, images = {} } = anime;
+    return (
+        <section className='anime-card'>
+            <a href={url} target='_blank' rel='noreferrer'>
+                <figure>
+                    <img src={images.webp.image_url} alt={title} />
+                </figure>
+                <h3>{title}</h3>
+            </a>
+        </section>
+    );
 }
 
 export default AnimeCard;
